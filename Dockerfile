@@ -22,7 +22,7 @@ RUN mvn -f $HOME/pom.xml package -DskipTests
 #FROM openjdk:17-ea-jdk-oracle
 FROM eclipse-temurin:11-jre
 #ENV JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -Xms32m -Xmx128m"
-ENV JAVA_OPTS="-Xms512m -Xmx2048m -XX:NativeMemoryTracking=summary -XX:+PrintNMTStatistics -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+ENV JAVA_OPTS="-Xms512m -Xmx2048m -XX:NativeMemoryTracking=summary"
 
 ARG HOME
 COPY --from=build $HOME/target/demo-gcp-pubsub-0.0.1-SNAPSHOT.jar /app/demo.jar
