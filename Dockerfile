@@ -4,7 +4,7 @@ ARG HOME=/home/demo-gcp-pubsub
 # Build stage
 #
 #FROM maven:3.8.3-openjdk-17 AS build
-FROM maven:3.9-eclipse-temurin-17-alpine AS build
+FROM maven:3.9-eclipse-temurin-11-alpine AS build
 ARG HOME
 #Create app folder
 RUN mkdir -p $HOME
@@ -20,9 +20,9 @@ RUN mvn -f $HOME/pom.xml package -DskipTests
 # Package stage
 #
 #FROM openjdk:17-ea-jdk-oracle
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:11-jdk-alpine
 #ENV JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -Xms32m -Xmx128m"
-ENV JAVA_OPTS="-XX:NativeMemoryTracking=summary -XX:+UnlockDiagnosticVMOptions -XX:+PrintNMTStatistics -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+ENV JAVA_OPTS="-XX:MaxRAM=512 -XX:NativeMemoryTracking=summary -XX:+UnlockDiagnosticVMOptions -XX:+PrintNMTStatistics -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 
 ARG HOME
 COPY --from=build $HOME/target/demo-gcp-pubsub-0.0.1-SNAPSHOT.jar /app/demo.jar
